@@ -9,8 +9,6 @@ const adminService = require('./routes/admin-routes');
 
 //userService
 userService(app);
-//adminService
-adminService(app);
 
 //middlewre
 app.use(bodyParser.urlencoded({ extended: false }));
