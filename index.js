@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const userService = require('./routes/user-routes');
-const adminService = require('./routes/admin-routes');
 
 //userService
 userService(app);
