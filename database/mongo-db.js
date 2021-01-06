@@ -98,5 +98,4 @@ class MongoDB {
   }
 }
 
-const prueba = new MongoDB();
-prueba.connect();
+module.exports = MongoDB;
