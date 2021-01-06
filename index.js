@@ -3,17 +3,20 @@
  */
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-const userService = require('./routes/user-routes');
+//llamamos a las variables del entorno
+const { config } = require('./config/config');
+
+//llamamos a la API del usuario
+const userServiceApi = require('./routes/user-routes');
 
 //userService
-userService(app);
+userServiceApi(app);
 
-//middlewre
-app.use(bodyParser.urlencoded({ extended: false }));
+//middlewre de body-parser nativo de Expressjs para leer formato JSON
+app.use(express.json());
 
-//parse aplication
-app.use(bodyParser.json());
+// puerto
+const { port } = config;
 
 app.get('/', (req, res) => {
   res.json('probado la ruta GENERAL');
@@ -26,6 +29,9 @@ app.post('/', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Listening on port http://localhost:3000');
+app.listen(port, (err) => {
+  if (err) {
+    console.error(new Error('No se puede iniciar el servidor'));
+  }
+  console.log(`Listening on port http://localhost:${port}`);
 });
