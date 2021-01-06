@@ -4,15 +4,17 @@
  */
 
 const { MongoClient, ObjectId } = require('mongodb');
-const { config } = require('../config/index');
+const { config } = require('../config/config');
 
+const USER = encodeURIComponent(config.dbUser);
+const PASSWORD = encodeURIComponent(config.dbPassword);
 const DB_NAME = config.dbName;
-const LOCAL_DB = config.dbLocal;
+
+const MONGO_URI = `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}:/${DB_NAME}?retryWrites=true&w=majority`;
 
 class MongoDB {
   constructor() {
-    this.client = new MongoClient(LOCAL_DB, {
-      userNewUrlParser: true,
+    this.client = new MongoClient(MONGO_URI, {
       useUnifiedTopology: true,
     });
     this.dbName = DB_NAME;
@@ -96,4 +98,5 @@ class MongoDB {
   }
 }
 
-module.exports = MongoDB;
+const prueba = new MongoDB();
+prueba.connect();
