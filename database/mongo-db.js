@@ -62,6 +62,17 @@ class MongoDB {
       });
   }
 
+  //trae un numero determinado de usuarios
+  getSomeData(collection, number) {
+    return this.connect()
+      .then((db) => {
+        return db.collection(collection).find().limit(number).toArray();
+      })
+      .catch((err) => {
+        console.error(new Error(`Algo salio mal en getSomeData ${err}`));
+      });
+  }
+
   //crea un nuevo dato a la coleccion
   create(collection, data) {
     return this.connect()

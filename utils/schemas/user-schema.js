@@ -7,8 +7,8 @@ const createUserSchema = {
   email: joi.string().email().required(),
   password: joi.string().required(),
   img: joi.string(),
-  role: joi.string().default('USER_ROLE').required(),
-  estado: joi.boolean().default(true).required(),
+  role: joi.string().default('USER_ROLE'),
+  estado: joi.boolean().default(true),
   google: joi.boolean().default(false),
 };
 

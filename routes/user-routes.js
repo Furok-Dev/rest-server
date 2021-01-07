@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // express para el manejo de las rutas
 const express = require('express');
 //llamamos al servicio creado para gestionar el CRUD de usuarios
@@ -19,6 +18,8 @@ const userServiceApi = (app) => {
   //hacemos que la aplicacion use las subrutas gestionadas por el router
   app.use('/users', router);
 
+  router.use(express.json());
+
   //inicializamos el servicio
   const userService = new UserService();
 
@@ -37,6 +38,29 @@ const userServiceApi = (app) => {
         });
       } catch (error) {
         next(error);
+      }
+    }
+  );
+
+  //crear un usuario
+  router.post(
+    '/',
+    validationHandler(createUserSchema),
+    async (req, res, next) => {
+      const body = req.body;
+      const newUser = {
+        nombre: body.nombre,
+        email: body.email,
+        password: body.password,
+      };
+
+      try {
+        const createdUserId = await userService.createUser({ newUser });
+        res
+          .status(201)
+          .json({ data: createdUserId, message: 'Usuario creado' });
+      } catch (err) {
+        next(err);
       }
     }
   );
